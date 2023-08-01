@@ -1,0 +1,14 @@
+@font-face {
+	font-family: 'Milky Nice';
+	src: url('fonts/MilkyNice.woff2') format('woff2'), url('fonts/MilkyNice.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Milky Nice Clean';
+	src: url('fonts/MilkyNiceClean.woff2') format('woff2'),
+		url('fonts/MilkyNiceClean.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
