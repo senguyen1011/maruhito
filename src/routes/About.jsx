@@ -98,7 +98,7 @@ const About = () => {
 const AboutMain = styled(motion.main)`
 	width: 100%;
 	min-height: 100vh;
-	padding: 3rem 0 2rem 0;
+	padding-bottom: 2rem;
 
 	display: flex;
 	flex-direction: column;
@@ -111,7 +111,7 @@ const AboutMain = styled(motion.main)`
 	color: ${props => props.theme.pinkContent};
 
   @media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
-    padding-top: 0;
+    padding-top: 3rem;
 	}
 `;
 
