@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useMediaQuery } from '@uidotdev/usehooks';
 import { theme, dropAndBounce, fadeIn } from '../styles';
 import Logo from '../components/Logo/Logo';
 import Nav from '../components/Nav';
@@ -10,10 +11,12 @@ import { ReactComponent as Kofi } from '../assets/svg/kofi.svg';
 import { ReactComponent as PayPal } from '../assets/svg/paypal.svg';
 import { ReactComponent as Twitter } from '../assets/svg/twitter.svg';
 import { ReactComponent as Instagram } from '../assets/svg/instagram.svg';
+import MobileNav from '../components/MobileNav';
 
 const Contacts = () => {
 	const [color, setColor] = useState('blue');
 	const [copied, setCopied] = useState(false);
+	const isWidthMd = useMediaQuery(`only screen and (min-width: ${theme.breakpoints.width.md})`);
 
 	const iconLinks = [
 		{
@@ -60,17 +63,26 @@ const Contacts = () => {
 				)}
 			</AnimatePresence>
 			<Container>
-				<LogoRow
-					initial={fadeIn.initial}
-					animate={fadeIn.animate}
-					exit={fadeIn.initial}
-					transition={fadeIn.transition}
-				>
-					<Logo
+				{isWidthMd ? (
+					<LogoRow
+						initial={fadeIn.initial}
+						animate={fadeIn.animate}
+						exit={fadeIn.initial}
+						transition={fadeIn.transition}
+					>
+						<Logo
+							color='yellowContent'
+							size='3rem'
+						/>
+					</LogoRow>
+				) : (
+					<MobileNav
 						color='yellowContent'
-						size='3rem'
+						align='center'
+						exclude={['About']}
+						handleClick={res => setColor(res.color)}
 					/>
-				</LogoRow>
+				)}
 				<ContactsContent
 					initial={fadeIn.initial}
 					animate={fadeIn.animate}
@@ -140,67 +152,23 @@ const Contacts = () => {
 										</motion.a>
 									);
 								})}
-								{/* <motion.a
-									href='https://ko-fi.com/maruhito'
-									target='_blank'
-									initial={dropAndBounce.initial}
-									animate={dropAndBounce.animate}
-									transition={{
-										...dropAndBounce.transition,
-										delay: 0.1,
-									}}
-								>
-									<Kofi />
-								</motion.a>
-								<motion.a
-									href=''
-									initial={dropAndBounce.initial}
-									animate={dropAndBounce.animate}
-									transition={{
-										...dropAndBounce.transition,
-										delay: 0.2,
-									}}
-								>
-									<PayPal />
-								</motion.a>
-								<motion.a
-									href='https://twitter.com/maruhito_'
-									target='_blank'
-									initial={dropAndBounce.initial}
-									animate={dropAndBounce.animate}
-									transition={{
-										...dropAndBounce.transition,
-										delay: 0.3,
-									}}
-								>
-									<Twitter />
-								</motion.a>
-								<motion.a
-									href='https://www.instagram.com/maruhito_/'
-									target='_blank'
-									initial={dropAndBounce.initial}
-									animate={dropAndBounce.animate}
-									transition={{
-										...dropAndBounce.transition,
-										delay: 0.4,
-									}}
-								>
-									<Instagram />
-								</motion.a> */}
 							</LinkIcons>
 						</div>
-
-						<Separator
-							initial={fadeIn.initial}
-							animate={fadeIn.animate}
-							transition={fadeIn.transition}
-						/>
-						<Nav
-							color='yellowContent'
-							align='center'
-							exclude={['Contacts']}
-							handleClick={res => setColor(res.color)}
-						/>
+						{isWidthMd && (
+							<>
+								<Separator
+									initial={fadeIn.initial}
+									animate={fadeIn.animate}
+									transition={fadeIn.transition}
+								/>
+								<Nav
+									color='yellowContent'
+									align='center'
+									exclude={['Contacts']}
+									handleClick={res => setColor(res.color)}
+								/>
+							</>
+						)}
 					</ProfileParagraph>
 				</ContactsContent>
 			</Container>
@@ -211,7 +179,7 @@ const Contacts = () => {
 const ContactsMain = styled(motion.main)`
 	width: 100%;
 	min-height: 100vh;
-	padding: 3rem 0 2rem 0;
+	padding-bottom: 2rem;
 
 	display: flex;
 	flex-direction: column;
@@ -220,6 +188,12 @@ const ContactsMain = styled(motion.main)`
 
 	background-color: ${props => props.theme.yellow};
 	color: ${props => props.theme.yellowContent};
+
+	padding-top: calc(${props => props.theme.mobileNavHeight} + 3rem);
+
+	@media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
+		padding-top: 3rem;
+	}
 `;
 
 const LogoRow = styled(motion.div)`
@@ -231,9 +205,14 @@ const LogoRow = styled(motion.div)`
 
 const ContactsContent = styled(motion.div)`
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	gap: 2rem;
 	text-align: center;
+
+	@media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
+		flex-direction: row;
+	}
 `;
 
 const ProfileImage = styled(motion.img)`

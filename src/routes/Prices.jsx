@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
 import { motion } from 'framer-motion';
+import { useMediaQuery } from '@uidotdev/usehooks';
 import { theme, dropAndBounce, fadeIn } from '../styles';
 import Logo from '../components/Logo/Logo';
 import Nav from '../components/Nav';
 import Container from '../components/Container';
 import profileImg from '../assets/priceProfile.png';
+import MobileNav from '../components/MobileNav';
 
 const Prices = () => {
 	const [color, setColor] = useState('blue');
+	const isWidthMd = useMediaQuery(`only screen and (min-width: ${theme.breakpoints.width.md})`);
 
 	const emoteList = [
 		'cebaemote21',
@@ -48,24 +51,45 @@ const Prices = () => {
 			transition={fadeIn.transition}
 		>
 			<Container>
-				<LogoRow
-					initial={fadeIn.initial}
-					animate={fadeIn.animate}
-					exit={fadeIn.initial}
-					transition={fadeIn.transition}
-				>
-					<motion.h1
-						initial={dropAndBounce.initial}
-						animate={dropAndBounce.animate}
-						transition={dropAndBounce.transition}
+				{isWidthMd ? (
+					<LogoRow
+						initial={fadeIn.initial}
+						animate={fadeIn.animate}
+						exit={fadeIn.initial}
+						transition={fadeIn.transition}
 					>
-						Price Rates
-					</motion.h1>
-					<Logo
-						color='blueContent'
-						size='3rem'
-					/>
-				</LogoRow>
+						<motion.h1
+							initial={dropAndBounce.initial}
+							animate={dropAndBounce.animate}
+							transition={dropAndBounce.transition}
+						>
+							Price Rates
+						</motion.h1>
+						<Logo
+							color='blueContent'
+							size='3rem'
+						/>
+					</LogoRow>
+				) : (
+					<>
+						<MobileNav
+							color='blueContent'
+							align='center'
+							exclude={['Prices']}
+							handleClick={res => setColor(res.color)}
+						/>
+
+						<motion.h1
+							initial={dropAndBounce.initial}
+							animate={dropAndBounce.animate}
+							transition={dropAndBounce.transition}
+              exit={fadeIn.initial}
+						>
+							Price Rates
+						</motion.h1>
+					</>
+				)}
+
 				<PricesContent
 					initial={fadeIn.initial}
 					animate={fadeIn.animate}
@@ -74,9 +98,7 @@ const Prices = () => {
 				>
 					<PriceBreakdown>
 						<div>
-							<ProfileImage
-								src={profileImg}
-							/>
+							<ProfileImage src={profileImg} />
 							<h3>Character Commission</h3>
 						</div>
 						<PriceList>
@@ -114,11 +136,13 @@ const Prices = () => {
 				</PricesContent>
 			</Container>
 			<Container>
-				<Nav
-					exclude={['Prices']}
-					color='blueContent'
-          handleClick={res => setColor(res.color)}
-				/>
+				{isWidthMd && (
+					<Nav
+						exclude={['Prices']}
+						color='blueContent'
+						handleClick={res => setColor(res.color)}
+					/>
+				)}
 			</Container>
 		</PricesMain>
 	);
@@ -127,7 +151,7 @@ const Prices = () => {
 const PricesMain = styled(motion.main)`
 	width: 100%;
 	min-height: 100vh;
-	padding: 3rem 0 2rem 0;
+	padding-bottom: 2rem;
 
 	display: flex;
 	flex-direction: column;
@@ -136,6 +160,12 @@ const PricesMain = styled(motion.main)`
 
 	background-color: ${props => props.theme.blue};
 	color: ${props => props.theme.blueContent};
+
+	padding-top: calc(${props => props.theme.mobileNavHeight} + 3rem);
+
+	@media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
+		padding-top: 3rem;
+	}
 
 	h3 {
 		text-align: center;
@@ -183,24 +213,38 @@ const PricesContent = styled(motion.div)`
 `;
 
 const ProfileImage = styled.img`
-	height: 40rem;
+	height: 30rem;
 	width: auto%;
 	border-radius: ${props => props.theme.borderRadius};
 
 	object-fit: cover;
+	@media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
+		height: 40rem;
+	}
 `;
 
 const PriceBreakdown = styled.div`
 	display: flex;
+	flex-direction: column;
 	gap: 1.5rem;
+
+	@media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
+		flex-direction: row;
+	}
 `;
 
 const PriceList = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	padding-top: 8rem;
-	padding-bottom: 2rem;
+	padding: 0;
+	text-align: center;
+	gap: 1rem;
+
+	@media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
+		padding: 8rem 0 2rem 0;
+		text-align: left;
+	}
 `;
 
 const PriceItem = styled.div`

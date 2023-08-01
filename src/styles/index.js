@@ -19,6 +19,7 @@ export const theme = {
 
 	borderRadius: '1rem',
   topNavHeight: '4.5rem',
+  mobileNavHeight: '5rem',
 	breakpoints: {
 		width: {
 			sm: '640px',
@@ -58,7 +59,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    min-width: 520px;
+    min-width: 300px;
   }
 
   h1, h2, h3, h4, h5, h6 {

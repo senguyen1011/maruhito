@@ -63,9 +63,14 @@ const LinkWrapper = styled(motion(Link))`
 	align-items: center;
 	gap: 0.0125em;
 
-	margin-left: auto;
+ 
+	margin: a0 auto;
 	
 	font-size: 2rem;
+
+  @media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
+		margin-right: 0;
+	}
 
 	span:nth-child(1) {
 		color: ${props => props.theme.blue};

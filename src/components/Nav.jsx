@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { motion } from 'framer-motion';
+import { useMediaQuery } from '@uidotdev/usehooks';
 
 import { routes } from '../routes/index';
 import { theme, dropAndBounce, fadeIn } from '../styles';
@@ -11,10 +12,12 @@ const Nav = ({
 	size = '1.5rem',
 	align = 'start',
 	exclude = [],
+	responsive = false,
 	animateDelay = 0.1,
-	handleClick,f
+	handleClick,
 }) => {
-  exclude = [...exclude, 'Fanart', 'Original'];
+	const isWidthSm = useMediaQuery(`only screen and (min-width: ${theme.breakpoints.width.sm})`);
+	exclude = [...exclude, 'Fanart', 'Original'];
 	const navList = routes.filter(route => !exclude.includes(route.name));
 
 	return (
@@ -23,6 +26,7 @@ const Nav = ({
 			align={align}
 			exit={fadeIn.initial}
 			transition={fadeIn.transition}
+			responsive={responsive}
 		>
 			{navList.map((route, ind) => {
 				return (
@@ -36,7 +40,7 @@ const Nav = ({
 							}}
 						>
 							<motion.div
-								whileHover={{ y: '-0.5rem' }}
+								whileHover={{ y: isWidthSm ? '-0.5rem' : '0' }}
 								whileTap={{ scale: 0.8 }}
 								transition={{
 									type: 'spring',
@@ -53,7 +57,7 @@ const Nav = ({
 								</NavLink>
 							</motion.div>
 						</motion.span>
-						{ind + 1 != navList.length && (
+						{ind + 1 != navList.length && (isWidthSm || !responsive) && (
 							<motion.svg
 								height='0.25em'
 								width='0.25em'
@@ -79,12 +83,18 @@ const Nav = ({
 const NavWrapper = styled(motion.nav)`
 	display: flex;
 	align-items: center;
+	flex-direction: ${props => (props.responsive ? 'column' : 'row')};
 	justify-content: ${props => props.align};
 	gap: 1rem;
 
-	font-size: ${props => props.size};
+	font-size: ${props => (props.responsive ? `calc(${props.size} * 1.25)` : props.size)};
 	text-transform: uppercase;
 	margin-top: 0.5em;
+
+	@media only screen and (min-width: ${props => props.theme.breakpoints.width.sm}) {
+		flex-direction: row;
+		font-size: ${props => props.size};
+	}
 `;
 
 const NavLink = styled(Link)`

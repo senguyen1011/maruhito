@@ -16,7 +16,7 @@ export const routes = [
 		color: 'blue',
 	},
 	{
-		name: 'About Me',
+		name: 'About',
 		path: '/about',
 		element: <About />,
 		color: 'pink',

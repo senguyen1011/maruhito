@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { styled } from 'styled-components';
 import { motion } from 'framer-motion';
+import { useMediaQuery } from '@uidotdev/usehooks';
 import { theme, dropAndBounce, fadeIn } from '../styles';
 import Logo from '../components/Logo/Logo';
 import Nav from '../components/Nav';
+import MobileNav from '../components/MobileNav';
 import Container from '../components/Container';
 import profileImg from '../assets/aboutProfile.png';
 
 const About = () => {
 	const [color, setColor] = useState('blue');
-
+	const isWidthMd = useMediaQuery(`only screen and (min-width: ${theme.breakpoints.width.md})`);
 	return (
 		<AboutMain
 			animate={{ backgroundColor: theme.pink }}
@@ -17,17 +19,27 @@ const About = () => {
 			transition={fadeIn.transition}
 		>
 			<Container>
-				<LogoRow
-					initial={fadeIn.initial}
-					animate={fadeIn.animate}
-					exit={fadeIn.initial}
-					transition={fadeIn.transition}
-				>
-					<Logo
+				{isWidthMd ? (
+					<LogoRow
+						initial={fadeIn.initial}
+						animate={fadeIn.animate}
+						exit={fadeIn.initial}
+						transition={fadeIn.transition}
+					>
+						<Logo
+							color='pinkContent'
+							size='3rem'
+						/>
+					</LogoRow>
+				) : (
+					<MobileNav
 						color='pinkContent'
-						size='3rem'
+						align='center'
+						exclude={['About']}
+						handleClick={res => setColor(res.color)}
 					/>
-				</LogoRow>
+				)}
+
 				<AboutContent
 					initial={fadeIn.initial}
 					animate={fadeIn.animate}
@@ -57,17 +69,21 @@ const About = () => {
 							a college student pursuing Multimedia Arts; one day I'll be an animator based in
 							the Philippines or Japan! I dream to share my creativity among the masses!
 						</motion.p>
-						<Separator
-							initial={fadeIn.initial}
-							animate={fadeIn.animate}
-							transition={fadeIn.transition}
-						/>
-						<Nav
-							color='pinkContent'
-							align='center'
-							exclude={['About Me']}
-							handleClick={res => setColor(res.color)}
-						/>
+						{isWidthMd && (
+							<>
+								<Separator
+									initial={fadeIn.initial}
+									animate={fadeIn.animate}
+									transition={fadeIn.transition}
+								/>
+								<Nav
+									color='pinkContent'
+									align='center'
+									exclude={['About']}
+									handleClick={res => setColor(res.color)}
+								/>
+							</>
+						)}
 					</ProfileParagraph>
 				</AboutContent>
 			</Container>
@@ -85,29 +101,46 @@ const AboutMain = styled(motion.main)`
 	align-items: center;
 	gap: 2rem;
 
+  padding-top: calc(${props => props.theme.mobileNavHeight} + 3rem);
+
 	background-color: ${props => props.theme.pink};
 	color: ${props => props.theme.pinkContent};
+
+  @media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
+    padding-top: 0;
+	}
 `;
 
 const LogoRow = styled(motion.div)`
 	display: flex;
 	justify-content: end;
 	width: 100%;
-  margin-bottom: 1rem;
+	margin-bottom: 1rem;
 `;
 
 const AboutContent = styled(motion.div)`
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	gap: 2rem;
+	text-align: center;
+
+	@media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
+		flex-direction: row;
+		text-align: left;
+	}
 `;
 
 const ProfileImage = styled(motion.img)`
-	height: 40rem;
-	width: auto%;
+height: 30rem;
+	width: auto;
 	border-radius: ${props => props.theme.borderRadius};
 
 	object-fit: cover;
+
+  @media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
+		height: 40rem;
+	}
 `;
 
 const ProfileParagraph = styled.div`

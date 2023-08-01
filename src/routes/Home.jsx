@@ -19,7 +19,7 @@ const Home = () => {
 			exit={{ backgroundColor: theme[color] }}
 			transition={fadeIn.transition}
 		>
-			<Container>
+			<HomeContainer>
 				<Hero
 					initial={fadeIn.initial}
 					animate={fadeIn.animate}
@@ -35,7 +35,7 @@ const Home = () => {
 							welcome!
 						</motion.h1>
 						<Logo
-							size='8rem'
+							size={isWidthMd ? '8rem' : '6rem'}
 							color={isWidthMd ? '' : 'blueContent'}
 							animate={true}
 						/>
@@ -47,8 +47,9 @@ const Home = () => {
 					size='2rem'
 					exclude={['Home']}
 					handleClick={res => setColor(res.color)}
+          responsive={true}
 				/>
-			</Container>
+			</HomeContainer>
 		</HomeMain>
 	);
 };
@@ -67,8 +68,13 @@ const HomeMain = styled(motion.main)`
 	color: ${props => props.theme.blueContent};
 `;
 
+const HomeContainer = styled(Container)`
+  flex-direction: column;
+  gap: 2rem;
+`
+
 const Hero = styled(motion.div)`
-  width: calc(100% - 18rem);
+  width: calc(100% - 6rem);
   min-height: unset;
 	aspect-ratio: 1;
 
@@ -78,6 +84,10 @@ const Hero = styled(motion.div)`
 	background-color: ${props => props.theme.white};
 	border-radius: 50%;
   overflow: hidden;
+
+  @media only screen and (min-width: ${props => props.theme.breakpoints.width.sm}) {
+		width: calc(100% - 18rem);
+	}
   
 	@media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
 		min-height: 32rem;

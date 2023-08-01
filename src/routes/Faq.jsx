@@ -4,8 +4,10 @@ import { fadeIn } from '../styles';
 import Container from '../components/Container';
 import Title from '../components/Logo/Title';
 import ContainerWithNav from '../components/ContainerWithNav';
-
+import MobileNav from '../components/MobileNav';
 const Faq = () => {
+  
+
 	const faqItems = [
 		{
 			question: 'What type of art do you specialize in?',
