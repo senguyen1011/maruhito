@@ -2,7 +2,6 @@ import { AnimatePresence, useIsPresent } from 'framer-motion';
 import { useLocation, Routes, Route } from 'react-router-dom';
 import { routes } from '.';
 const Root = () => {
-	const isPresent = useIsPresent();
 	const location = useLocation();
 
 	return (
@@ -13,6 +12,7 @@ const Root = () => {
 			>
 				{routes.map((route, ind) => (
 					<Route
+						key={route.path}
 						path={route.path}
 						element={route.element}
 					/>

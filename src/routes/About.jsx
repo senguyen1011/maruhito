@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { motion } from 'framer-motion';
 import { useMediaQuery } from '@uidotdev/usehooks';
@@ -10,6 +10,10 @@ import Container from '../components/Container';
 import profileImg from '../assets/aboutProfile.png';
 
 const About = () => {
+  useEffect(() => {
+    const themeColor = document.getElementById('themeColor');
+    themeColor.setAttribute('content', theme.pink);
+  });
 	const [color, setColor] = useState('blue');
 	const isWidthMd = useMediaQuery(`only screen and (min-width: ${theme.breakpoints.width.md})`);
 	return (

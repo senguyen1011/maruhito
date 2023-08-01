@@ -49,10 +49,6 @@ const StyledMain = styled(motion.main)`
 	background-color: ${props => props.theme.white};
 	color: ${props => props.theme.blueContent};
 
-
-	background-color: ${props => props.theme.pink};
-	color: ${props => props.theme.pinkContent};
-
 	@media only screen and (min-width: ${props => props.theme.breakpoints.width.md}) {
 		padding-top: 2rem;
 

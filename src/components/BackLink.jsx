@@ -64,7 +64,7 @@ const LinkWrapper = styled(motion(Link))`
 	gap: 0.0125em;
 
  
-	margin: a0 auto;
+	margin: 0 auto;
 	
 	font-size: 2rem;
 

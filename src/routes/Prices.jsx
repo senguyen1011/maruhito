@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { motion } from 'framer-motion';
 import { useMediaQuery } from '@uidotdev/usehooks';
@@ -10,6 +10,10 @@ import profileImg from '../assets/priceProfile.png';
 import MobileNav from '../components/MobileNav';
 
 const Prices = () => {
+	useEffect(() => {
+		const themeColor = document.getElementById('themeColor');
+		themeColor.setAttribute('content', theme.blue);
+	});
 	const [color, setColor] = useState('blue');
 	const isWidthMd = useMediaQuery(`only screen and (min-width: ${theme.breakpoints.width.md})`);
 
@@ -83,7 +87,7 @@ const Prices = () => {
 							initial={dropAndBounce.initial}
 							animate={dropAndBounce.animate}
 							transition={dropAndBounce.transition}
-              exit={fadeIn.initial}
+							exit={fadeIn.initial}
 						>
 							Price Rates
 						</motion.h1>

@@ -4,8 +4,14 @@ import Title from '../components/Logo/Title';
 import ContainerWithNav from '../components/ContainerWithNav';
 import Carousel from '../components/Carousel';
 import BackLink from '../components/BackLink';
-
+import { theme } from '../styles';
+import { useEffect } from 'react';  
 const Fanart = () => {
+  useEffect(() => {
+    const themeColor = document.getElementById('themeColor');
+    themeColor.setAttribute('content', theme.pink);
+  });
+
 	return (
 		<ContainerWithNav
 			navColor='pink'

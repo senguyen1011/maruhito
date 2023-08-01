@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import { useMediaQuery } from '@uidotdev/usehooks';
 import { motion } from 'framer-motion';
@@ -12,6 +12,10 @@ import heroImg from '../assets/welcomeHero.png';
 const Home = () => {
 	const isWidthMd = useMediaQuery(`only screen and (min-width: ${theme.breakpoints.width.md})`);
 	const [color, setColor] = useState('blue');
+  useEffect(() => {
+    const themeColor = document.getElementById('themeColor');
+    themeColor.setAttribute('content', theme.blue);
+  });
 
 	return (
 		<HomeMain

@@ -4,9 +4,14 @@ import { fadeIn } from '../styles';
 import Container from '../components/Container';
 import Title from '../components/Logo/Title';
 import ContainerWithNav from '../components/ContainerWithNav';
-import MobileNav from '../components/MobileNav';
+import { theme } from '../styles';
+import { useEffect } from 'react'; 
+
 const Faq = () => {
-  
+  useEffect(() => {
+    const themeColor = document.getElementById('themeColor');
+    themeColor.setAttribute('content', theme.yellow);
+  });
 
 	const faqItems = [
 		{

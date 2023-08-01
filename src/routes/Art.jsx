@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { styled } from 'styled-components';
 import { motion } from 'framer-motion';
 import { fadeIn } from '../styles';
@@ -7,7 +8,12 @@ import Title from '../components/Logo/Title';
 import fanArtImg from '../assets/sana.png';
 import originalImg from '../assets/maruxmas.png';
 import ContainerWithNav from '../components/ContainerWithNav';
+import { theme } from '../styles';
 const Art = () => {
+  useEffect(() => {
+    const themeColor = document.getElementById('themeColor');
+    themeColor.setAttribute('content', theme.blue);
+  });
 	return (
 		<ContainerWithNav
 			navColor='blue'
